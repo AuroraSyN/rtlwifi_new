@@ -1391,7 +1391,7 @@ static int rtl_op_ampdu_action(struct ieee80211_hw *hw,
 #endif
 #endif
 {
-	struct rtl_priv *rtlpriv = rtl_priv(hw);
+//	struct rtl_priv *rtlpriv = rtl_priv(hw);
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 6, 0))
 	struct ieee80211_sta *sta = params->sta;
 	enum ieee80211_ampdu_mlme_action action = params->action;
@@ -1401,27 +1401,27 @@ static int rtl_op_ampdu_action(struct ieee80211_hw *hw,
 
 	switch (action) {
 	case IEEE80211_AMPDU_TX_START:
-		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
-			 "IEEE80211_AMPDU_TX_START: TID:%d\n", tid);
+//		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
+//			 "IEEE80211_AMPDU_TX_START: TID:%d\n", tid);
 		return rtl_tx_agg_start(hw, vif, sta, tid, ssn);
 	case IEEE80211_AMPDU_TX_STOP_CONT:
 	case IEEE80211_AMPDU_TX_STOP_FLUSH:
 	case IEEE80211_AMPDU_TX_STOP_FLUSH_CONT:
-		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
-			 "IEEE80211_AMPDU_TX_STOP: TID:%d\n", tid);
+//		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
+//			 "IEEE80211_AMPDU_TX_STOP: TID:%d\n", tid);
 		return rtl_tx_agg_stop(hw, vif, sta, tid);
 	case IEEE80211_AMPDU_TX_OPERATIONAL:
-		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
-			 "IEEE80211_AMPDU_TX_OPERATIONAL:TID:%d\n", tid);
+//		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
+//			 "IEEE80211_AMPDU_TX_OPERATIONAL:TID:%d\n", tid);
 		rtl_tx_agg_oper(hw, sta, tid);
 		break;
 	case IEEE80211_AMPDU_RX_START:
-		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
-			 "IEEE80211_AMPDU_RX_START:TID:%d\n", tid);
+//		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
+//			 "IEEE80211_AMPDU_RX_START:TID:%d\n", tid);
 		return rtl_rx_agg_start(hw, sta, tid);
 	case IEEE80211_AMPDU_RX_STOP:
-		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
-			 "IEEE80211_AMPDU_RX_STOP:TID:%d\n", tid);
+//		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_TRACE,
+//			 "IEEE80211_AMPDU_RX_STOP:TID:%d\n", tid);
 		return rtl_rx_agg_stop(hw, sta, tid);
 	default:
 		pr_err("IEEE80211_AMPDU_ERR!!!!:\n");
