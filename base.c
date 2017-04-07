@@ -1650,9 +1650,10 @@ int rtl_tx_agg_start(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
 	struct rtl_tid_data *tid_data;
 	struct rtl_sta_info *sta_entry = NULL;
 
-	if (sta == NULL)
+	if (!sta || !vif) {
+		pr_err("sta %p, vif %p\n", sta, vif);
 		return -EINVAL;
-
+	}
 	if (unlikely(tid >= MAX_TID_COUNT))
 		return -EINVAL;
 
