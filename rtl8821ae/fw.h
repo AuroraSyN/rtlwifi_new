@@ -42,7 +42,7 @@
 #define USE_OLD_WOWLAN_DEBUG_FW 0
 
 #define H2C_8821AE_RSVDPAGE_LOC_LEN		5
-#define H2C_8821AE_PWEMODE_LENGTH			7
+#define H2C_8821AE_PWEMODE_LENGTH			5
 #define H2C_8821AE_JOINBSSRPT_LENGTH		1
 #define H2C_8821AE_AP_OFFLOAD_LENGTH		3
 #define H2C_8821AE_WOWLAN_LENGTH			3
@@ -218,8 +218,6 @@ enum rtl8821a_h2c_cmd {
 	SET_BITS_TO_LE_1BYTE((__cmd)+3, 0, 8, __value)
 #define SET_H2CCMD_PWRMODE_PARM_PWR_STATE(__cmd, __value)	\
 	SET_BITS_TO_LE_1BYTE((__cmd)+4, 0, 8, __value)
-#define SET_H2CCMD_PWRMODE_PARM_BYTE5(__cmd, __value)		\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 5, 0, 8, __value)
 #define GET_8821AE_H2CCMD_PWRMODE_PARM_MODE(__cmd)		\
 	LE_BITS_TO_1BYTE(__cmd, 0, 8)
 
@@ -240,19 +238,19 @@ enum rtl8821a_h2c_cmd {
 #define SET_H2CCMD_MSRRPT_PARM_MACID_IND(__cmd, __value)	\
 	SET_BITS_TO_LE_1BYTE(__cmd, 1, 1, __value)
 #define SET_H2CCMD_MSRRPT_PARM_MACID(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE(__cmd + 1, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE(__cmd+1, 0, 8, __value)
 #define SET_H2CCMD_MSRRPT_PARM_MACID_END(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE(__cmd + 2, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE(__cmd+2, 0, 8, __value)
 
 /* AP_OFFLOAD */
 #define SET_H2CCMD_AP_OFFLOAD_ON(__cmd, __value)	\
 	SET_BITS_TO_LE_1BYTE(__cmd, 0, 8, __value)
 #define SET_H2CCMD_AP_OFFLOAD_HIDDEN(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 1, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+1, 0, 8, __value)
 #define SET_H2CCMD_AP_OFFLOAD_DENYANY(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 2, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+2, 0, 8, __value)
 #define SET_H2CCMD_AP_OFFLOAD_WAKEUP_EVT_RPT(__cmd, __value) \
-	SET_BITS_TO_LE_1BYTE((__cmd) + 3, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+3, 0, 8, __value)
 
 /* Keep Alive Control*/
 #define SET_8812_H2CCMD_KEEP_ALIVE_ENABLE(__cmd, __value)	\
@@ -260,7 +258,7 @@ enum rtl8821a_h2c_cmd {
 #define SET_8812_H2CCMD_KEEP_ALIVE_ACCPEPT_USER_DEFINED(__cmd, __value)	\
 	SET_BITS_TO_LE_1BYTE(__cmd, 1, 1, __value)
 #define SET_8812_H2CCMD_KEEP_ALIVE_PERIOD(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 1, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+1, 0, 8, __value)
 
 /*REMOTE_WAKE_CTRL */
 #define SET_8812_H2CCMD_REMOTE_WAKECTRL_ENABLE(__cmd, __value)	\
@@ -278,32 +276,31 @@ enum rtl8821a_h2c_cmd {
 #define SET_8812_H2CCMD_AOAC_GLOBAL_INFO_PAIRWISE_ENC_ALG(__cmd, __value)\
 	SET_BITS_TO_LE_1BYTE(__cmd, 0, 8, __value)
 #define SET_8812_H2CCMD_AOAC_GLOBAL_INFO_GROUP_ENC_ALG(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 1, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+1, 0, 8, __value)
 
 /* AOAC_RSVDPAGE_LOC */
 #define SET_8821AE_H2CCMD_AOAC_RSVDPAGE_LOC_REMOTE_WAKE_CTRL_INFO(__cmd, __value)	\
 	SET_BITS_TO_LE_1BYTE((__cmd), 0, 8, __value)
 #define SET_8821AE_H2CCMD_AOAC_RSVDPAGE_LOC_ARP_RSP(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 1, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+1, 0, 8, __value)
 #define SET_8821AE_H2CCMD_AOAC_RSVDPAGE_LOC_NEIGHBOR_ADV(__cmd, __value)\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 2, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+2, 0, 8, __value)
 #define SET_8821AE_H2CCMD_AOAC_RSVDPAGE_LOC_GTK_RSP(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 3, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+3, 0, 8, __value)
 #define SET_8821AE_H2CCMD_AOAC_RSVDPAGE_LOC_GTK_INFO(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 4, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+4, 0, 8, __value)
 #define SET_8821AE_H2CCMD_AOAC_RSVDPAGE_LOC_GTK_EXT_MEM(__cmd, __value)	\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 5, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+5, 0, 8, __value)
 
 /* Disconnect_Decision_Control */
 #define SET_8812_H2CCMD_DISCONNECT_DECISION_CTRL_ENABLE(__cmd, __value)	\
 	SET_BITS_TO_LE_1BYTE(__cmd, 0, 1, __value)
 #define SET_8812_H2CCMD_DISCONNECT_DECISION_CTRL_USER_SETTING(__cmd, __value)\
 	SET_BITS_TO_LE_1BYTE(__cmd, 1, 1, __value)
-/* unit: beacon period */
 #define SET_8812_H2CCMD_DISCONNECT_DECISION_CTRL_CHECK_PERIOD(__cmd, __value)\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 1, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+1, 0, 8, __value) /* unit: beacon period */
 #define SET_8812_H2CCMD_DISCONNECT_DECISION_CTRL_TRYPKT_NUM(__cmd, __value)\
-	SET_BITS_TO_LE_1BYTE((__cmd) + 2, 0, 8, __value)
+	SET_BITS_TO_LE_1BYTE((__cmd)+2, 0, 8, __value)
 
 int rtl8821ae_download_fw(struct ieee80211_hw *hw, bool buse_wake_on_wlan_fw);
 #if (USE_SPECIFIC_FW_TO_SUPPORT_WOWLAN == 1)
