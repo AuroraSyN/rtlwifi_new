@@ -256,7 +256,4 @@ void rtl8821ae_do_iqk(struct ieee80211_hw *hw, u8 delta_thermal_index,
 void rtl8821ae_reset_iqk_result(struct ieee80211_hw *hw);
 u32 phy_get_tx_swing_8812A(struct ieee80211_hw *hw, u8 band, u8 rf_path);
 
-void _rtl8812ae_phy_set_rfe_reg_24g(struct ieee80211_hw *hw);
-void _rtl8812ae_phy_set_rfe_reg_5g(struct ieee80211_hw *hw);
-
 #endif

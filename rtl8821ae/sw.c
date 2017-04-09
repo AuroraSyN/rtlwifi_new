@@ -160,8 +160,6 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 	rtlpriv->psc.wo_wlan_mode = WAKE_ON_MAGIC_PACKET |
 				    WAKE_ON_PATTERN_MATCH;
 
-	/* for debug level */
-	rtlpriv->dbg.global_debuglevel = rtlpriv->cfg->mod_params->debug;
 	/* for LPS & IPS */
 	rtlpriv->psc.inactiveps = rtlpriv->cfg->mod_params->inactiveps;
 	rtlpriv->psc.swctrl_lps = rtlpriv->cfg->mod_params->swctrl_lps;
@@ -174,8 +172,8 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 		rtlpriv->cfg->mod_params->disable_watchdog;
 	if (rtlpriv->cfg->mod_params->disable_watchdog)
 		pr_info("watchdog disabled\n");
-	rtlpriv->psc.reg_fwctrl_lps = 2;
-	rtlpriv->psc.reg_max_lps_awakeintvl = 2;
+	rtlpriv->psc.reg_fwctrl_lps = 3;
+	rtlpriv->psc.reg_max_lps_awakeintvl = 5;
 
 	/* for ASPM, you can close aspm through
 	 * set const_support_pciaspm = 0
@@ -192,12 +190,12 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 	/* for firmware buf */
 	rtlpriv->rtlhal.pfirmware = vzalloc(0x8000);
 	if (!rtlpriv->rtlhal.pfirmware) {
-		pr_err("rtl8821ae: Can't alloc buffer for fw.\n");
+		pr_err("Can't alloc buffer for fw.\n");
 		return 1;
 	}
 	rtlpriv->rtlhal.wowlan_firmware = vzalloc(0x8000);
 	if (!rtlpriv->rtlhal.wowlan_firmware) {
-		pr_err("rtl8821ae: Can't alloc buffer for wowlan fw.\n");
+		pr_err("Can't alloc buffer for wowlan fw.\n");
 		return 1;
 	}
 
@@ -223,7 +221,7 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 					      rtlpriv->io.dev, GFP_KERNEL, hw,
 					      rtl_fw_cb);
 		if (err) {
-			pr_err("irtl8821ae: Failed to request normal firmware!\n");
+			pr_err("Failed to request normal firmware!\n");
 			return 1;
 		}
 	}
@@ -234,7 +232,7 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 				      rtlpriv->io.dev, GFP_KERNEL, hw,
 				      rtl_wowlan_fw_cb);
 	if (err) {
-		pr_err("rtl8821ae: Failed to request wowlan firmware!\n");
+		pr_err("Failed to request wowlan firmware!\n");
 		return 1;
 	}
 	return 0;
@@ -318,7 +316,8 @@ static struct rtl_mod_params rtl8821ae_mod_params = {
 	.fwctrl_lps = true,
 	.msi_support = true,
 	.int_clear = true,
-	.debug = 0,
+	.debug_level = 0,
+	.debug_mask = 0,
 	.disable_watchdog = 0,
 };
 
@@ -440,7 +439,8 @@ MODULE_FIRMWARE("rtlwifi/rtl8821aefw.bin");
 MODULE_FIRMWARE("rtlwifi/rtl8821aefw_29.bin");
 
 module_param_named(swenc, rtl8821ae_mod_params.sw_crypto, bool, 0444);
-module_param_named(debug, rtl8821ae_mod_params.debug, int, 0444);
+module_param_named(debug_level, rtl8821ae_mod_params.debug_level, int, 0644);
+module_param_named(debug_mask, rtl8821ae_mod_params.debug_mask, ullong, 0644);
 module_param_named(ips, rtl8821ae_mod_params.inactiveps, bool, 0444);
 module_param_named(swlps, rtl8821ae_mod_params.swctrl_lps, bool, 0444);
 module_param_named(fwlps, rtl8821ae_mod_params.fwctrl_lps, bool, 0444);
@@ -453,7 +453,8 @@ MODULE_PARM_DESC(ips, "Set to 0 to not use link power save (default 1)\n");
 MODULE_PARM_DESC(swlps, "Set to 1 to use SW control power save (default 0)\n");
 MODULE_PARM_DESC(fwlps, "Set to 1 to use FW control power save (default 1)\n");
 MODULE_PARM_DESC(msi, "Set to 1 to use MSI interrupts mode (default 1)\n");
-MODULE_PARM_DESC(debug, "Set debug level (0-5) (default 0)");
+MODULE_PARM_DESC(debug_level, "Set debug level (0-5) (default 0)");
+MODULE_PARM_DESC(debug_mask, "Set debug mask (default 0)");
 MODULE_PARM_DESC(disable_watchdog, "Set to 1 to disable the watchdog (default 0)\n");
 MODULE_PARM_DESC(int_clear, "Set to 0 to disable interrupt clear before set (default 1)\n");
 

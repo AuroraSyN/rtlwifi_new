@@ -32,8 +32,8 @@
 #include "regd.h"
 #include "pci.h"
 #include <linux/ip.h>
-#include <linux/module.h>
 #include <linux/udp.h>
+#include <linux/module.h>
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0)
 #error "This repo requires at least kernel 3.14. If it is impossible to update your system, then try checking out commit b2295f9c31eb1. It has errors, but it may build on an older kernel."

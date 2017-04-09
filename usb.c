@@ -11,10 +11,6 @@
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
  * more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA
- *
  * The full GNU General Public License is included in this distribution in the
  * file called LICENSE.
  *
@@ -1045,18 +1041,11 @@ static void rtl_fill_h2c_cmd_work_callback(struct work_struct *work)
 	rtlpriv->cfg->ops->fill_h2c_cmd(hw, H2C_RA_MASK, 5, rtlpriv->rate_mask);
 }
 
-/* Dummy enable/disable ASPM routine */
-static void rtl_usb_aspm_dummy(struct ieee80211_hw *hw)
-{
-}
-
 static const struct rtl_intf_ops rtl_usb_ops = {
 	.adapter_start = rtl_usb_start,
 	.adapter_stop = rtl_usb_stop,
 	.adapter_tx = rtl_usb_tx,
 	.waitq_insert = rtl_usb_tx_chk_waitq_insert,
-	.disable_aspm = rtl_usb_aspm_dummy,
-	.enable_aspm = rtl_usb_aspm_dummy,
 };
 
 int rtl_usb_probe(struct usb_interface *intf,
@@ -1072,7 +1061,7 @@ int rtl_usb_probe(struct usb_interface *intf,
 	hw = ieee80211_alloc_hw(sizeof(struct rtl_priv) +
 				sizeof(struct rtl_usb_priv), &rtl_ops);
 	if (!hw) {
-		WARN_ONCE(true, "ieee80211 alloc failed\n");
+		WARN_ONCE(true, "rtl_usb: ieee80211 alloc failed\n");
 		return -ENOMEM;
 	}
 	rtlpriv = hw->priv;
@@ -1103,7 +1092,6 @@ int rtl_usb_probe(struct usb_interface *intf,
 	rtlpriv->rtlhal.interface = INTF_USB;
 	rtlpriv->cfg = rtl_hal_cfg;
 	rtlpriv->intf_ops = &rtl_usb_ops;
-	rtl_dbgp_flag_init(hw);
 	/* Init IO handler */
 	_rtl_usb_io_handler_init(&udev->dev, hw);
 	rtlpriv->cfg->ops->read_chip_version(hw);
